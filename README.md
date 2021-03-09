@@ -83,8 +83,6 @@ Check and edit the other files in the config/ directory to customize your applic
 Refer to the README in the tests direcotry for information specific to basic application tests.
 
 
-### Demo
-URL: http://yii2-stisla.alfiannaufal.com
 
 ### Credits:
 *   [YiiFramework](https://yiiframework)
