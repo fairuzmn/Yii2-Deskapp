@@ -4,7 +4,7 @@
 
 YII2 Single Application Template
 =================================
-STISLA Build in Template in Single YII2 template project
+DeskApp Build in Template in Single YII2 template project
 --------------------------------------------------------------
 
 
@@ -88,7 +88,7 @@ URL: http://yii2-stisla.alfiannaufal.com
 
 ### Credits:
 *   [YiiFramework](https://yiiframework)
-*   [Stisla Bootstrap 4 Admin Panel Template](https://github.com/stisla/stisla)
+*   [DeskApp Bootstrap 4 Admin Panel Template](https://github.com/dropways/deskapp)
 *   [yii2-mimin Simple RBAC Manager for Yii2 (minify of yii2-admin)](https://github.com/hscstudio/yii2-mimin)
 
 
