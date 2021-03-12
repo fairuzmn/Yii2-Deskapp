@@ -13,7 +13,7 @@ $config = [
      'class' => '\hscstudio\mimin\components\AccessControl',
      'allowActions' => [
         // add wildcard allowed action here!
-    //   'site/*',
+       'site/logout',
         'debug/*',
         'mimin/*', // only in dev mode
     ],
@@ -89,12 +89,15 @@ $config = [
     'components' => [
 
 
+
        'authManager' => [
         'class' => 'yii\rbac\DbManager', // only support DbManager
     ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'y2B_PhmMeo1G4hPY0dO7KfNled31dl6L',
+             'enableCsrfValidation' => false,
+            
 
         ],
         /*
@@ -159,6 +162,7 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'db_sinau' => require(__DIR__ . '/db_sinau.php'),
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

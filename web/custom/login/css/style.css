@@ -1,0 +1,12 @@
+.copyright {
+    width: 80%;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+    color: #b5b5b5;
+}
+
+@media screen and (max-width: 1140px){
+.kolom2 {
+    display: none !important;
+}    }

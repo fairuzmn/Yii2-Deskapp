@@ -24,10 +24,10 @@ class AppAsset extends AssetBundle
          'vendors/styles/style.css',
     ];
     public $js = [
-       "vendors/scripts/core.js",
-       "vendors/scripts/script.min.js",
-       "vendors/scripts/process.js",
-       "vendors/scripts/layout-settings.js",
+       'vendors/scripts/core.js',
+       'vendors/scripts/script.min.js',
+       'vendors/scripts/process.js',
+       'vendors/scripts/layout-settings.js',
             ];
     public $depends = [
         'yii\web\YiiAsset',

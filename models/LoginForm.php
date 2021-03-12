@@ -42,8 +42,13 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+            if(!$user) 
+            {
+                $this->addError($attribute, 'Username Tidak Ditemukan');
+                
+            }
+            if ( !$user->validatePassword($this->password)) {
+                $this->addError($attribute, 'Username dan Password Tidak Sesuai');
             }
         }
     }
@@ -56,6 +61,23 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
+            $user = $this->getUser();
+            AuthAssignment::deleteAll(['user_id'=>$user->id]);
+             
+            if(Yii::$app->session->get('user_from') == 'simpeg') 
+             {
+               $role = new AuthAssignment;
+               $role->item_name = 'pegawai';
+               $role->user_id = $user->id;
+               $role->save(false);
+             } else {
+                $role = new AuthAssignment;
+                $role->item_name = 'mahasiswa';
+                $role->user_id = $user->id;
+                $role->save(false);
+                  
+             }
+
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         } else {
             return false;

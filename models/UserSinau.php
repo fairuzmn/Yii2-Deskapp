@@ -21,16 +21,87 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  */
-class User extends ActiveRecord implements IdentityInterface
+class UserSinau extends User
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 1;
+    public $new_password, $old_password, $repeat_password;
+
+
+    public static function tableName()
+    {
+        return 'gate.sc_user';
+    }
+
+    public static function getDb()
+    {
+        return Yii::$app->get('db_sinau');
+    }
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['username', 'email'], 'required'],
+            [['username', 'email', 'password_hash'], 'string', 'max' => 255],
+            [['username', 'email'], 'unique'],
+            [['email'], 'email'],
+            ['status','integer'],
+            [['old_password', 'new_password', 'repeat_password'], 'string', 'min' => 6],
+            [['repeat_password'], 'compare', 'compareAttribute' => 'new_password'],
+            [['old_password', 'new_password', 'repeat_password'], 'required', 'when' => function ($model) {
+                return (!empty($model->new_password));
+            }, 'whenClient' => "function (attribute, value) {
+                return ($('#user-new_password').val().length>0);
+            }"],
+            //['username', 'filter', 'filter' => 'trim'],
+            //['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.'],
+        ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['password'] = ['old_password', 'new_password', 'repeat_password'];
+        return $scenarios;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'email' => 'Email',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoles()
+    {
+        return $this->hasMany(AuthAssignment::className(), [
+            'user_id' => 'userid',
+        ]);
+    }
 
     public static function findIdentity($id)
     {
-		if(Yii::$app->session->get('user_from') == 'simpeg') {
-			return UserSimpeg::findIdentity($id);
-		} else {
-			return UserSinau::findIdentity($id);
-		}	
+        return static::findOne(['userid' => $id]);
     }
     /**
      * @inheritdoc
@@ -47,16 +118,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        $model = UserSimpeg::findByUsername($username);
-        if ($model) {
-            Yii::$app->session->set('user_from', 'simpeg');
-            return $model;
-        }
-        $model = UserSinau::findByUsername($username);
-        if ($model) {
-            Yii::$app->session->set('user_from', 'sinau');
-            return $model;
-        }
+        return static::findOne(['username' => $username]);
     }
     /**
      * Finds user by password reset token
@@ -66,6 +128,13 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByPasswordResetToken($token)
     {
+        if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+        return static::findOne([
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
+        ]);
     }
     /**
      * Finds out if password reset token is valid
@@ -87,6 +156,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getId()
     {
+        return $this->getPrimaryKey();
     }
     /**
      * @inheritdoc
@@ -110,8 +180,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-
-        return md5($password) == ($this->password);
+        return md5((md5($password.$this->salt)).$this->salt) == ($this->password);
     }
     /**
      * Generates password hash from password and sets it to the model
