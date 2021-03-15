@@ -42,12 +42,7 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if(!$user) 
-            {
-                $this->addError($attribute, 'Username Tidak Ditemukan');
-                
-            }
-            if ( !$user->validatePassword($this->password)) {
+             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Username dan Password Tidak Sesuai');
             }
         }

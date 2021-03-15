@@ -207,4 +207,10 @@ class UserSimpeg extends User
     {
         $this->password_reset_token = null;
     }
+
+    public function getPegawai()
+    {
+      return  $this->hasOne(Pegawai::className(),['id'=>'id_pegawai']);
+    }
+
 }

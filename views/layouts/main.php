@@ -8,8 +8,12 @@ use yii\helpers\Url;
 use yii\bootstrap4\Breadcrumbs;
 use app\widgets\Alert;
 use app\assets\AppAsset;
+use app\assets\MainAsset;
 
 AppAsset::register($this);
+MainAsset::register($this);
+
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -17,6 +21,8 @@ AppAsset::register($this);
 
 <head>
   <meta charset="<?= Yii::$app->charset ?>">
+  <link rel="icon" type="image/png" href="<?=Url::to(["/images/uinsa.png"])?>">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php $this->registerCsrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>

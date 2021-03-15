@@ -15,7 +15,9 @@ $config = [
         // add wildcard allowed action here!
        'site/logout',
         'debug/*',
-        'mimin/*', // only in dev mode
+        'mimin/*', 
+        'gii/*',
+        // only in dev mode
     ],
 ],
 

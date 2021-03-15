@@ -18,6 +18,8 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'https://use.fontawesome.com/releases/v5.7.2/css/all.css',
+     
         'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap',
          'vendors/styles/icon-font.min.css',
          'vendors/styles/core.css',

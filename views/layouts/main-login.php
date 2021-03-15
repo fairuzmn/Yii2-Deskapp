@@ -37,13 +37,13 @@ LoginAsset::register($this);
                 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100 h-400" src="<?=Url::to(["/images/bg3.jpg"])?>" alt="First slide">
+                            <img class="img-fluid" src="<?=Url::to(["/images/bg3.jpg"])?>" alt="First slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100 h-400" src="<?=Url::to(["/images/bg2.jpg"])?>"" alt="Second slide">
+                            <img class="img-fluid" src="<?=Url::to(["/images/bg2.jpg"])?>" alt="Second slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100 h-400" src="<?=Url::to(["/images/bg1.jpg"])?>"" alt="Third slide">
+                            <img class="img-fluid" src="<?=Url::to(["/images/bg1.jpg"])?>" alt="Third slide">
                         </div>
                     </div>
                     
